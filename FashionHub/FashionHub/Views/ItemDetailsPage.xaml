@@ -1,0 +1,181 @@
+﻿<Page x:Class="FashionHub.Views.ItemDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:components="clr-namespace:FashionHub.Components"
+      xmlns:vm="clr-namespace:FashionHub.ViewModels"
+      xmlns:models="clr-namespace:FashionHub"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ItemDetailsPage">
+  
+  <Page.Resources>
+    <ResourceDictionary Source="../Resources/Styles.xaml"/>
+  </Page.Resources>
+
+  <Page.DataContext>
+    <vm:ItemDetailsPageViewModel/>
+  </Page.DataContext>
+
+  <Grid Background="#252424">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    
+    <components:NavigationBar VerticalAlignment="Top" Grid.Row="0"/>
+
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" >
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="auto"/>
+        <RowDefinition Height="auto"/>
+        <RowDefinition Height="auto"/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="2*"/>
+        <ColumnDefinition Width="1*"/>
+      </Grid.ColumnDefinitions>
+
+        <Border Padding="25" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center">
+          <ItemsControl ItemsSource="{Binding CurrentItem.ImagePaths}" Grid.Column="0" Grid.Row="0">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal" />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <Border Background="Transparent" Width="400" Height="400" Margin="25">
+                  <Image Source="{Binding}" Stretch="UniformToFill"/>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+
+        </Border>
+
+        <Border Padding="50"  Grid.Row="0" Grid.Column="1">
+          <StackPanel Width="auto" Orientation="Vertical">
+
+            <TextBlock Text="{Binding CurrentItem.ShortName}" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 15"/>
+
+            <TextBlock Text="{Binding CurrentItem.Price, StringFormat='\{0} $'}" Style="{StaticResource StandardTextBlock}" FontSize="20" FontWeight="Bold" Margin="0 0 0 15"/>
+
+            <StackPanel Orientation="Horizontal">
+              <Path Fill="#FDF3FF" Stroke="#FDF3FF" StrokeThickness="1"
+                              Data="M 10,1 L 12,7 L 18,7 L 13,11 L 15,17 L 10,13 L 5,17 L 7,11 L 2,7 L 8,7 Z">
+                <Path.RenderTransform>
+                  <ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
+                </Path.RenderTransform>
+              </Path>
+              <TextBlock Text="{Binding CurrentItem.Rating}" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 15"/>
+            </StackPanel>
+
+            <components:CustomComboBox
+                      ItemsSource="{Binding AvailableColors}"
+                      SelectedItem="{Binding SelectedColor, Mode=TwoWay}"
+                      Placeholder="Выбрать цвет" Margin="0 0 0 20"
+                      MaxItems="10"/>
+
+            <components:CustomComboBox
+                      ItemsSource="{Binding AvailableSizes}"
+                      SelectedItem="{Binding SelectedSize, Mode=TwoWay}"
+                      Placeholder="Выбрать размер"
+                      MaxItems="10"/>
+
+            <Button Content="Добавить в корзину" Style="{StaticResource CustomButton}" Width="auto" Height="85" Margin="0 40 0 40"
+                    Command="{Binding AddToCartCommand}"/>
+
+            <TextBlock Text="{Binding CurrentItem.Description}" Style="{StaticResource StandardTextBlock}"/>
+
+            <TextBlock Text="{Binding CurrentItem.DeliveryCountry, StringFormat='Страна доставки: {0}'}" Style="{StaticResource StandardTextBlock}" Margin="0 10 0 0"/>
+
+            <TextBlock Text="{Binding CurrentItem.Compound, StringFormat='Состав: {0}'}" Style="{StaticResource StandardTextBlock}" Margin="0 10 0 0"/>
+          </StackPanel>
+        </Border>
+
+        <Border Padding="50 0 0 0" Grid.Row="1" Grid.ColumnSpan="2">
+          <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+            <TextBlock Text="Отзывы" Style="{StaticResource Title}" Margin="0 40 0 20"/>
+
+            <ItemsControl ItemsSource="{Binding Comments, Mode=OneWay}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <components:InnerShadowBorder Width="700" Height="auto" Margin="0 0 0 20"
+                                   ShadowFill="#502971"
+                                   ContentBackground="#633788"
+                                   ContentBorderBrush="#A76AD9">
+                    <components:InnerShadowBorder.InnerContent>
+                      <Border Padding="25">
+                        <Grid>
+                          <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                          </Grid.ColumnDefinitions>
+                          <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                          </Grid.RowDefinitions>
+
+                          <Image Source="{Binding User.Profile.AvatarPath}" Width="100" Height="100" Grid.Column="0" Grid.Row="0"/>
+
+                          <TextBlock Text="{Binding Text}" Style="{StaticResource StandardTextBlock}" Margin="40 0 0 0" Grid.Column="1" Grid.Row="0"/>
+
+                          <StackPanel Orientation="Horizontal"  Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="40 0 0 0">
+                            <TextBlock Text="{Binding Rate, StringFormat='\Оценка: {0}'}" Style="{StaticResource StandardTextBlock}"/>
+                            <Path Fill="#FDF3FF" Stroke="#FDF3FF" StrokeThickness="1"
+                              Data="M 10,1 L 12,7 L 18,7 L 13,11 L 15,17 L 10,13 L 5,17 L 7,11 L 2,7 L 8,7 Z">
+                              <Path.RenderTransform>
+                                <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                              </Path.RenderTransform>
+                            </Path>
+                          </StackPanel>
+                        </Grid>
+                      </Border>
+                    </components:InnerShadowBorder.InnerContent>
+                  </components:InnerShadowBorder>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Button Content="Оставить комментарий" Style="{StaticResource CustomButton}"  Width="400" Height="85" Margin="0 20 0 40"  HorizontalAlignment="Left" Cursor="Hand"
+                    Command="{Binding OpenAddingCommentWindowCommand}"/>
+          </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2" Grid.ColumnSpan="2" Padding="50 0 0 0" >
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Недавно просмотрено" Margin="0 0 0 20">
+              <TextBlock.Style>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource Title}">
+                  <Setter Property="Visibility" Value="Visible"/>
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding RecentlyViewedItems.Count}" Value="0">
+                      <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </TextBlock.Style>
+            </TextBlock>
+            <ItemsControl ItemsSource="{Binding RecentlyViewedItems}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal"/>
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                  <components:ProductCard Margin="0 0 50 50" Width="250"/>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+        </Border>
+
+      </Grid>
+    </ScrollViewer>
+
+  </Grid>
+</Page>

@@ -1,0 +1,115 @@
+﻿<UserControl x:Class="FashionHub.Components.ProductCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:FashionHub.ViewModels"
+             xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
+             Loaded="OnLoaded">
+  <UserControl.Resources>
+    <ResourceDictionary Source="../Resources/Styles.xaml"/>
+  </UserControl.Resources>
+
+  <Grid HorizontalAlignment="Center" Panel.ZIndex="1">
+    <Rectangle Fill="#502971" RadiusX="10" RadiusY="10">
+      <Rectangle.OpacityMask>
+        <VisualBrush>
+          <VisualBrush.Visual>
+            <Border Width="{Binding ActualWidth, ElementName=mainBorder}" 
+                            Height="{Binding ActualHeight, ElementName=mainBorder}"
+                            CornerRadius="10"
+                            Background="White"
+                            BorderThickness="2"/>
+          </VisualBrush.Visual>
+        </VisualBrush>
+      </Rectangle.OpacityMask>
+      <Rectangle.Margin>
+        <Thickness Left="2" Top="2" Right="-2" Bottom="-2"/>
+      </Rectangle.Margin>
+    </Rectangle>
+
+    <Border x:Name="mainBorder" Panel.ZIndex="2"
+           CornerRadius="10"
+                Background="#633788"
+                BorderBrush="#A76AD9"
+                BorderThickness="2 2 0 0"
+            Padding="30">
+      <interactivity:Interaction.Triggers>
+        <interactivity:EventTrigger EventName="MouseUp">
+          <interactivity:InvokeCommandAction Command="{Binding OnItemClickedCommand}" CommandParameter="{Binding Product}"/>
+        </interactivity:EventTrigger>
+      </interactivity:Interaction.Triggers>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="auto"/>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Image Width="200" Height="200"
+       Source="{Binding ImagePath}" 
+       Stretch="UniformToFill"
+       Margin="0,0,0,10"
+       ClipToBounds="True" Grid.Row="0"/>
+        <Grid Grid.Row="1">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="1*"/>
+          </Grid.ColumnDefinitions>
+
+          <StackPanel Orientation="Vertical" Grid.Column="0" Height="130" MaxHeight="200">
+            <StackPanel Orientation="Horizontal" Margin="0, 10, 0, 0">
+              <StackPanel.Resources>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource StandardTextBlock}"/>
+              </StackPanel.Resources>
+              <TextBlock Text="{Binding Product.Price}" FontSize="22" FontWeight="Bold"/>
+              <TextBlock Text=" $" FontSize="22" FontWeight="Bold"/>
+            </StackPanel>
+
+            <TextBlock Text="{Binding Product.ShortName}" Style="{StaticResource StandardTextBlock}" Margin="0,10,0,0"/>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10,0,0">
+              <StackPanel.Resources>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource StandardTextBlock}"/>
+              </StackPanel.Resources>
+              <Path Fill="#FDF3FF" Stroke="#FDF3FF" StrokeThickness="1"
+                              Data="M 10,1 L 12,7 L 18,7 L 13,11 L 15,17 L 10,13 L 5,17 L 7,11 L 2,7 L 8,7 Z">
+                <Path.RenderTransform>
+                  <ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
+                </Path.RenderTransform>
+              </Path>
+              <TextBlock Text="{Binding Rating}"/>
+            </StackPanel>
+          </StackPanel>
+          <ToggleButton Grid.Column="1" VerticalAlignment="Bottom"
+                  IsChecked="{Binding IsFavorite, Mode=TwoWay}"
+                  Background="Transparent"
+                  BorderThickness="0"
+                  Command="{Binding ToggleFavoriteCommand}"
+                  Visibility="{Binding IsUserLoggedIn, Converter={StaticResource BoolToVisibilityConverter}}">
+            <ToggleButton.Template>
+              <ControlTemplate TargetType="ToggleButton">
+                <Image Source="{Binding IsFavorite, Converter={StaticResource FavoriteIconConverter}}"
+                   Width="30"
+                   Height="30"/>
+              </ControlTemplate>
+            </ToggleButton.Template>
+          </ToggleButton>
+        </Grid>
+
+        <Border Visibility="{Binding IsCatalogPage, Converter={StaticResource BoolToVisibilityConverter}}" Grid.Row="2" VerticalAlignment="Bottom">
+        <StackPanel Orientation="Vertical" Margin="0 10 0 0" Width="auto"
+                       Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVisibilityConverter}}">
+          <StackPanel.Resources>
+            <Style TargetType="Button" BasedOn="{StaticResource AdminButtons}"/>
+          </StackPanel.Resources>
+          <Button Content="{DynamicResource EditItem}" 
+            Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+            CommandParameter="{Binding Product}"/>
+          <Button Content="{DynamicResource DeleteItem}" 
+            Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+            CommandParameter="{Binding Product}"/>
+        </StackPanel>
+        </Border>
+      </Grid>
+    </Border>
+  </Grid>
+</UserControl>

@@ -1,0 +1,191 @@
+﻿<Page x:Class="FashionHub.Views.AddingUserPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:components="clr-namespace:FashionHub.Components"
+      xmlns:vm="clr-namespace:FashionHub.ViewModels"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddingUserPage">
+
+  <Page.Resources>
+    <ResourceDictionary Source="../../Resources/Styles.xaml"/>
+  </Page.Resources>
+
+  <Grid Background="#252424">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <components:NavigationBar VerticalAlignment="Top" Grid.Row="0"/>
+
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+      <Border Padding="50" Background="Transparent"
+              AllowDrop="True"
+        DragOver="AvatarBorder_DragOver"
+        Drop="AvatarBorder_Drop">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+          </Grid.ColumnDefinitions>
+
+          <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+
+          <TextBlock Text="{Binding TitleText}" HorizontalAlignment="Center" Style="{StaticResource Title}" Grid.Row="0" Grid.ColumnSpan="2"  Margin="0 0 0 30"/>
+
+          <StackPanel MaxWidth="500" Width="auto" Orientation="Vertical" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="1">
+            <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+            <TextBlock Text="Логин" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+            <components:InnerShadowBorder ShadowFill="Gray" ContentBackground="#252424" ContentBorderBrush="Black" Height="auto" MinHeight="30">
+              <components:InnerShadowBorder.InnerContent>
+                <TextBox Text="{Binding User.Login}" Style="{StaticResource StandardTextBox}" Background="Transparent" BorderThickness="0"/>
+              </components:InnerShadowBorder.InnerContent>
+            </components:InnerShadowBorder>
+            <TextBlock Text="{Binding UserErrors[Login]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+          </StackPanel>
+
+          <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+            <TextBlock Text="Email" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+            <components:InnerShadowBorder ShadowFill="Gray" ContentBackground="#252424" ContentBorderBrush="Black" Height="auto" MinHeight="30">
+              <components:InnerShadowBorder.InnerContent>
+                <TextBox Text="{Binding User.Email}" Style="{StaticResource StandardTextBox}" Background="Transparent" BorderThickness="0"/>
+              </components:InnerShadowBorder.InnerContent>
+            </components:InnerShadowBorder>
+            <TextBlock Text="{Binding UserErrors[Email]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+          </StackPanel>
+
+          <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+            <TextBlock Text="Пароль" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+            <components:InnerShadowBorder ShadowFill="Gray" ContentBackground="#252424" ContentBorderBrush="Black" Height="auto" MinHeight="30">
+              <components:InnerShadowBorder.InnerContent>
+                  <PasswordBox PasswordChanged="OnPasswordChanged" Background="Transparent" BorderThickness="0" Foreground="White"/>
+              </components:InnerShadowBorder.InnerContent>
+            </components:InnerShadowBorder>
+              <TextBlock Text="Если оставить пароль пустым, то он не измениться" Style="{StaticResource StandardTextBlock}" FontSize="12" FontWeight="Light" Margin="0 10 0 0"
+                          Visibility="{Binding PageState, Converter={StaticResource EditingStateToVisibilityConverter}}"/>
+              <TextBlock Text="{Binding UserErrors[PasswordHash]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+          </StackPanel>
+
+          <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+            <TextBlock Text="Роль" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+            <components:CustomComboBox
+                ItemsSource="{Binding Roles}"
+                SelectedValuePath="RoleId"
+                DisplayMemberPath="RoleName"
+                SelectedValue="{Binding User.RoleId, Mode=TwoWay}"
+                Background="Transparent" 
+                BorderThickness="0"/>
+            <TextBlock Text="{Binding UserErrors[RoleId]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+          </StackPanel>
+
+          <Button Content="{Binding ButtonText}" Style="{StaticResource CustomButton}" Height="85" Width="auto" Margin="0 0 0 0" Cursor="Hand"
+                            Command="{Binding SaveCommand}"/>
+
+        </StackPanel>
+
+
+          <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1" MaxWidth="500" Margin="50 0 0 0">
+
+            <Grid Visibility="{Binding User.Profile, Converter={StaticResource NullOrEmptyToVisibilityConverter}}" MaxHeight="300">
+              <Grid Margin="10">
+                <Image Source="{Binding User.Profile.AvatarPath, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 32"/>
+                <Button Content="✕"
+                Width="30"
+                Height="30"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Background="Red"
+                Foreground="White"
+                Command="{Binding DataContext.RemoveAvatarCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                CommandParameter="{Binding}"/>
+              </Grid>
+            </Grid>
+
+
+            <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+              <TextBlock Text="Имя" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+              <components:InnerShadowBorder ShadowFill="Gray" ContentBackground="#252424" ContentBorderBrush="Black" Height="auto" MinHeight="30">
+                <components:InnerShadowBorder.InnerContent>
+                  <TextBox Text="{Binding User.Profile.FirstName}" Style="{StaticResource StandardTextBox}" Background="Transparent" BorderThickness="0"/>
+                </components:InnerShadowBorder.InnerContent>
+              </components:InnerShadowBorder>
+              <TextBlock Text="{Binding UserErrors[FirstName]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+              <TextBlock Text="Фамилия" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+              <components:InnerShadowBorder ShadowFill="Gray" ContentBackground="#252424" ContentBorderBrush="Black" Height="auto" MinHeight="30">
+                <components:InnerShadowBorder.InnerContent>
+                  <TextBox Text="{Binding User.Profile.LastName}" Style="{StaticResource StandardTextBox}" Background="Transparent" BorderThickness="0"/>
+                </components:InnerShadowBorder.InnerContent>
+              </components:InnerShadowBorder>
+              <TextBlock Text="{Binding UserErrors[LastName]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+              <TextBlock Text="Отчество" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+              <components:InnerShadowBorder ShadowFill="Gray" ContentBackground="#252424" ContentBorderBrush="Black" Height="auto" MinHeight="30">
+                <components:InnerShadowBorder.InnerContent>
+                  <TextBox Text="{Binding User.Profile.MiddleName}" Style="{StaticResource StandardTextBox}" Background="Transparent" BorderThickness="0"/>
+                </components:InnerShadowBorder.InnerContent>
+              </components:InnerShadowBorder>
+              <TextBlock Text="{Binding UserErrors[MiddleName]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+              <TextBlock Text="Телефон" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+              <components:InnerShadowBorder ShadowFill="Gray" ContentBackground="#252424" ContentBorderBrush="Black" Height="auto" MinHeight="30">
+                <components:InnerShadowBorder.InnerContent>
+                  <TextBox Text="{Binding User.Profile.PhoneNumber}" Style="{StaticResource StandardTextBox}" Background="Transparent" BorderThickness="0"/>
+                </components:InnerShadowBorder.InnerContent>
+              </components:InnerShadowBorder>
+              <TextBlock Text="{Binding UserErrors[PhoneNumber]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+              <TextBlock Text="Дата рождения" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+              <components:InnerShadowBorder ShadowFill="Gray" ContentBackground="#252424" ContentBorderBrush="Black" Height="auto" MinHeight="30">
+                <components:InnerShadowBorder.InnerContent>
+                  <TextBox Text="{Binding User.Profile.BirthDate}" Style="{StaticResource StandardTextBox}" Background="Transparent" BorderThickness="0"/>
+                </components:InnerShadowBorder.InnerContent>
+              </components:InnerShadowBorder>
+              <TextBlock Text="{Binding UserErrors[BirthDate]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+              <TextBlock Text="Пол" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+              <StackPanel Orientation="Horizontal" Margin="0 0 0 15">
+                <RadioButton IsChecked="{Binding User.Profile.Gender, Converter={StaticResource GenderToNullCheckedConverter}, Mode=TwoWay}" GroupName="gender" Style="{StaticResource CustomToggleStyle}" Margin="0 0 10 0"/>
+                <TextBlock Text="Не выбран" Style="{StaticResource StandardTextBlock}"/>
+              </StackPanel>
+
+
+              <StackPanel Orientation="Horizontal" Margin="0 0 0 15">
+                <RadioButton IsChecked="{Binding User.Profile.Gender, Converter={StaticResource GenderToMaleConverter}, Mode=TwoWay}" GroupName="gender" Style="{StaticResource CustomToggleStyle}" Margin="0 0 10 0"/>
+                <TextBlock Text="Мужской" Style="{StaticResource StandardTextBlock}"/>
+              </StackPanel>
+
+              <StackPanel Orientation="Horizontal">
+                <RadioButton IsChecked="{Binding User.Profile.Gender, Converter={StaticResource GenderToFemaleConverter}, Mode=TwoWay}" GroupName="gender" Style="{StaticResource CustomToggleStyle}"  Margin="0 0 10 0"/>
+                <TextBlock Text="Женский" Style="{StaticResource StandardTextBlock}"/>
+              </StackPanel>
+              <TextBlock Text="{Binding UserErrors[RoleId]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+            </StackPanel>
+
+            <Button Content="Добавить аватар" Style="{StaticResource CustomButton}" Height="50" Width="auto" Margin="0 0 0 0" Cursor="Hand"
+                             Command="{Binding AddAvatarCommand}"/>
+
+
+          </StackPanel>
+        </Grid>
+      </Border>
+    </ScrollViewer>
+  </Grid>
+</Page>

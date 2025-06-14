@@ -1,0 +1,20 @@
+﻿FashionHub
+
+
+winexe
+C#
+.cs
+C:\Users\glora\Desktop\ООП курсовой\FashionHub\FashionHub\obj\Debug\
+FashionHub
+none
+false
+DEBUG;TRACE
+C:\Users\glora\Desktop\ООП курсовой\FashionHub\FashionHub\App.xaml
+44-286711396
+
+96-1465306791
+31728798367
+Components\AdminNavigationBar.xaml;Components\Comment&Item.xaml;Components\CustomButton.xaml;Components\CustomComboBox.xaml;Components\CustomComboBoxSearch.xaml;Components\CustomListBox.xaml;Components\InnerShadowBorder.xaml;Components\NavigationBar.xaml;Components\NavigationBarVertical.xaml;Components\Order.xaml;Components\ProductCard.xaml;Components\ProductCardHorizontal.xaml;Components\Star.xaml;MainWindow.xaml;Resources\Converters\Converters.xaml;Resources\Resources.en.xaml;Resources\Resources.ru.xaml;Resources\Styles.xaml;Resources\Theme.Dark.xaml;Resources\Theme.Light.xaml;Views\AddingCommentWindow.xaml;Views\AdminOrdersPage\AddingOrderPage.xaml;Views\AdminOrdersPage\AdminOrdersPage.xaml;Views\AdminCommentsPage\AddingCommentPage.xaml;Views\AdminProductsPage\AddingProductPage.xaml;Views\AdminCommentsPage\AdminCommentsPage.xaml;Views\AdminProductsPage\AdminProductsPage.xaml;Views\AdminUsersPage\AddingUserPage.xaml;Views\AdminUsersPage\AdminUsersPage.xaml;Views\BagPage.xaml;Views\CatalogPage.xaml;Views\CustomMessageBox.xaml;Views\FavoritesPage.xaml;Views\ItemDetailsPage.xaml;Views\LoginWindow.xaml;Views\MainPage.xaml;Views\OrderCourierPage.xaml;Views\OrderDetailsPage.xaml;Views\OrderPointPage.xaml;Views\ProfileCommentsPage.xaml;Views\ProfileInformationPage.xaml;Views\ProfileOrdersPage.xaml;Views\RegisterWindow.xaml;Views\SettingsWindow.xaml;
+
+True
+

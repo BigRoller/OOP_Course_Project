@@ -1,0 +1,181 @@
+﻿<Page x:Class="FashionHub.Views.ProfileInformationPage"
+      xmlns:components="clr-namespace:FashionHub.Components"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ProfilePage">
+
+  <Page.Resources>
+    <ResourceDictionary Source="../Resources/Styles.xaml"/>
+  </Page.Resources>
+
+  <Grid Background="#252424">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="100"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+
+    <components:NavigationBar Grid.Row="0" Grid.ColumnSpan="2"/>
+
+    <components:NavigationBarVertical  Grid.Row="1" Grid.Column="0"/>
+
+
+    <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="1" Grid.Column="1">
+      <Border Padding="50 50 0 50"  
+              Drop="Image_Drop"
+       DragEnter="Image_DragEnter"
+              AllowDrop="True">
+        <StackPanel Orientation="Vertical">
+          <TextBlock Text="Мои данные" Style="{StaticResource Title}" Margin="0 0 0 25"/>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="auto"/>
+              <ColumnDefinition Width="auto"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+              <RowDefinition Height="*"/>
+              <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0">
+              <Image Source="{Binding AvatarPath}" Width="200" Height="200"  VerticalAlignment="Top"/>
+              <Button Content="Изменить картинку" Height="50" Width="200" Style="{StaticResource CustomButton}" Margin="0 20 0 0" HorizontalAlignment="Center"
+                      Command="{Binding ChangeAvatarCommand}" Cursor="Hand"/>
+              <Button Content="Убрать аватар" Height="50" Width="200" Style="{StaticResource SecondaryCustomButton}" Margin="0 20 0 0" HorizontalAlignment="Center"
+                      Command="{Binding DeleteAvatarCommand}" Cursor="Hand"/>
+              <Button Content="Выйти из аккаунта" Height="50" Width="200" Style="{StaticResource SecondaryCustomButton}" Margin="0 20 0 0" HorizontalAlignment="Center"
+                      Command="{Binding LogoutCommand}" Cursor="Hand"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" Margin="70 0 0 0">
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+                <TextBlock Text="Фамилия" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                 ShadowFill="Gray"
+                 ContentBackground="#252424"
+                 ContentBorderBrush="Black"
+                 Width="200"
+                 Height="30">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding LastName, Mode=TwoWay}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding UserErrors[LastName]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+              </StackPanel>
+
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+                <TextBlock Text="Дата рождения" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                 ShadowFill="Gray"
+                 ContentBackground="#252424"
+                 ContentBorderBrush="Black"
+                 Width="200"
+                 Height="30">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding BirthDate, Mode=TwoWay}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding UserErrors[BirthDate]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+              </StackPanel>
+
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+                <TextBlock Text="Пол" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 15">
+                  <RadioButton IsChecked="{Binding Gender, Converter={StaticResource GenderToNullCheckedConverter}, Mode=TwoWay}" GroupName="gender" Style="{StaticResource CustomToggleStyle}" Margin="0 0 10 0"/>
+                  <TextBlock Text="Не выбран" Style="{StaticResource StandardTextBlock}"/>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 15">
+                  <RadioButton IsChecked="{Binding Gender, Converter={StaticResource GenderToMaleConverter}, Mode=TwoWay}" GroupName="gender" Style="{StaticResource CustomToggleStyle}" Margin="0 0 10 0"/>
+                  <TextBlock Text="Мужской" Style="{StaticResource StandardTextBlock}"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                  <RadioButton IsChecked="{Binding Gender, Converter={StaticResource GenderToFemaleConverter}, Mode=TwoWay}" GroupName="gender" Style="{StaticResource CustomToggleStyle}"  Margin="0 0 10 0"/>
+                  <TextBlock Text="Женский" Style="{StaticResource StandardTextBlock}"/>
+                </StackPanel>
+                <TextBlock Text="{Binding UserErrors[RoleId]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+              </StackPanel>
+
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+                <TextBlock Text="Email" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                 ShadowFill="Gray"
+                 ContentBackground="#252424"
+                 ContentBorderBrush="Black"
+                 Width="200"
+                 Height="30">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding Email, Mode=TwoWay}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding ProfileErrors[Email]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+              </StackPanel>
+
+
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32">
+                <TextBlock Text="Телефон" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                 ShadowFill="Gray"
+                 ContentBackground="#252424"
+                 ContentBorderBrush="Black"
+                 Width="200"
+                 Height="30">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding Phone, Mode=TwoWay}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+              </StackPanel>
+              <TextBlock Text="{Binding UserErrors[Phone]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+            </StackPanel>
+
+            <WrapPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0">
+              <StackPanel Orientation="Vertical" Margin="40 0 0 32">
+                <TextBlock Text="Имя" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                      ShadowFill="Gray"
+                      ContentBackground="#252424"
+                      ContentBorderBrush="Black"
+                      Width="200"
+                      Height="30">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding FirstName, Mode=TwoWay}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding UserErrors[FirstName]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+              </StackPanel>
+
+              <StackPanel Orientation="Vertical" Margin="40 0 0 32">
+                <TextBlock Text="Отчество" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                        ShadowFill="Gray"
+                        ContentBackground="#252424"
+                        ContentBorderBrush="Black"
+                        Width="200"
+                        Height="30">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding MiddleName, Mode=TwoWay}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding UserErrors[MiddleName]}" Foreground="#FF6E2F" FontSize="12" Margin="5 2 0 0"/>
+              </StackPanel>
+            </WrapPanel>
+          </Grid>
+          <Button Content="Сохранить изменения" Command="{Binding SaveChangesCommand}" Style="{StaticResource CustomButton}" Height="85" Width="400" Margin="270 20 0 0" HorizontalAlignment="Left"/>
+        </StackPanel>
+      </Border>
+    </ScrollViewer>
+
+  </Grid>
+</Page>

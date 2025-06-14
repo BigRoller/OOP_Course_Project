@@ -1,0 +1,92 @@
+﻿<Page x:Class="FashionHub.Views.AdminOrdersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:vm="clr-namespace:FashionHub.ViewModels"
+      xmlns:components="clr-namespace:FashionHub.Components"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AdminOrdersPage"
+      x:Name="AdminOrdersPageRoot">
+
+  <Page.Resources>
+    <ResourceDictionary Source="../../Resources/Styles.xaml"/>
+  </Page.Resources>
+
+  <DockPanel Background="#252424">
+    <components:NavigationBar DockPanel.Dock="Top"/>
+    <components:AdminNavigationBar DockPanel.Dock="Top"/>
+
+    <TextBlock Text="Заказы"
+               Style="{StaticResource Title}"
+               Margin="0,10,0,10"
+               HorizontalAlignment="Center"
+               DockPanel.Dock="Top"/>
+
+    <Grid Margin="10">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <Button Content="Добавить заказ"
+              Margin="0,0,0,10"
+              Padding="10,5"
+              Command="{Binding AddOrderCommand}"
+              Grid.Row="0"
+              HorizontalAlignment="Left"
+              Style="{StaticResource AdminButtons}"
+              Width="150" Height="50"/>
+
+      <DataGrid Grid.Row="1"
+                x:Name="OrdersGrid"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                IsReadOnly="True"
+                SelectionMode="Single"
+                ItemsSource="{Binding Orders}"
+                SelectedItem="{Binding SelectedOrder, Mode=TwoWay}"
+                ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
+                CellStyle="{StaticResource DataGridCellStyle}"
+                Background="#252424"
+                AlternatingRowBackground="#2D2D2D">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="ID" Binding="{Binding OrderId}" Width="50"/>
+          <DataGridTextColumn Header="Пользователь" Binding="{Binding User.Login}" Width="100"/>
+          <DataGridTextColumn Header="Дата" Binding="{Binding OrderDate}" Width="150"/>
+          <DataGridTextColumn Header="Доставка" Binding="{Binding DeliveryMethod}" Width="100"/>
+          <DataGridTextColumn Header="Адрес" Binding="{Binding Address}" Width="200"/>
+          <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100"/>
+          <DataGridTextColumn Header="Сумма" Binding="{Binding TotalOrderPrice}" Width="100"/>
+          <DataGridTextColumn Header="Дата доставки" Binding="{Binding NearestDeliveryDate}" Width="100"/>
+          <DataGridTextColumn Header="Товары" Binding="{Binding ProductNames}" Width="*"/>
+
+          <DataGridTemplateColumn Header="Действия" Width="400" MinWidth="400">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 5 0 0">
+                  <Button Content="Изменить"
+                          Margin="5,0" Padding="5,2"
+                          Command="{Binding DataContext.EditOrderCommand, ElementName=AdminOrdersPageRoot}"
+                          CommandParameter="{Binding}"
+                          Style="{StaticResource AdminButtons}"/>
+                  <Button Content="Удалить"
+                          Margin="5,0" Padding="5,2"
+                          Command="{Binding DataContext.DeleteOrderCommand, ElementName=AdminOrdersPageRoot}"
+                          CommandParameter="{Binding}"
+                          Style="{StaticResource AdminButtons}"/>
+                  <Button Content="Пометить как выполненный"
+                          Margin="5,0" Padding="5,2"
+                          Command="{Binding DataContext.FulfillOrderCommand, ElementName=AdminOrdersPageRoot}"
+                          CommandParameter="{Binding}"
+                          Style="{StaticResource AdminButtons}"/>
+                </StackPanel>
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
+      </DataGrid>
+    </Grid>
+  </DockPanel>
+</Page>

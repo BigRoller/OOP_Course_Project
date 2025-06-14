@@ -1,0 +1,102 @@
+﻿<Window x:Class="FashionHub.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FashionHub.Components"
+        xmlns:vm="clr-namespace:FashionHub.ViewModels"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="600" Width="600"
+        WindowStyle="None" 
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+
+  <Window.Resources>
+    <ResourceDictionary Source="../Resources/Styles.xaml"/>
+  </Window.Resources>
+
+  <Window.DataContext>
+    <vm:LoginWindowViewModel/>
+  </Window.DataContext>
+
+  <Border BorderBrush="Black" BorderThickness="3">
+    <Border.InputBindings>
+      <MouseBinding 
+            MouseAction="LeftClick" 
+            Command="{Binding DragMoveCommand}"/>
+    </Border.InputBindings>
+    <Grid Background="#252424">
+    <StackPanel>
+      <Image Source="../Resources/icons/close.png" Width="40" Height="40"
+             HorizontalAlignment="Right" Margin="20 20 20 0" Opacity="0.25" Cursor="Hand">
+        <Image.InputBindings>
+          <MouseBinding MouseAction="LeftClick" 
+                      Command="{Binding CloseWindowCommand}"/>
+        </Image.InputBindings>
+      </Image>
+        <TextBlock Text="Вход"
+           HorizontalAlignment="Center"
+           Style="{StaticResource Title}"
+           Margin="0 25 0 25"/>
+      <local:InnerShadowBorder 
+          Width="300" 
+          Height="auto"
+          ShadowFill="#502971"
+          ContentBackground="#633788"
+          ContentBorderBrush="#A76AD9">
+        <local:InnerShadowBorder.InnerContent>
+          <Border Padding="24">
+            <StackPanel>
+              
+              <TextBlock Text="Логин:" Style="{StaticResource StandardTextBlock}" Margin="0 12 0 10"/>
+              <local:InnerShadowBorder 
+                   Width="250" 
+                   Height="40"
+                   ShadowFill="#A76AD9"
+                   ContentBackground="#633788"
+                   ContentBorderBrush="#502971">
+                <local:InnerShadowBorder.InnerContent>
+                  <TextBox Background="Transparent" BorderThickness="0" VerticalAlignment="Center" CaretBrush="White" Foreground="White"
+                           Text="{Binding LoginName, UpdateSourceTrigger=PropertyChanged}"/>
+                </local:InnerShadowBorder.InnerContent>
+              </local:InnerShadowBorder>
+                <TextBlock Text="{Binding LoginError}" Foreground="#FF6E2F" FontSize="11"
+                           Visibility="{Binding LoginError, Converter={StaticResource StringToVisibilityConverter}}"/>
+
+                <TextBlock Text="Пароль:" Style="{StaticResource StandardTextBlock}" Margin="0 20 0 00"/>
+              <local:InnerShadowBorder 
+                   Width="250" 
+                   Height="40"
+                   ShadowFill="#A76AD9"
+                   ContentBackground="#633788"
+                   ContentBorderBrush="#502971">
+                <local:InnerShadowBorder.InnerContent>
+                    <PasswordBox Background="Transparent" BorderThickness="0" VerticalAlignment="Center" CaretBrush="White" Foreground="White"
+                           PasswordChanged="LoginPasswordBoxInput_PasswordChanged"/>
+                </local:InnerShadowBorder.InnerContent>
+              </local:InnerShadowBorder>
+                <TextBlock Text="{Binding PasswordError}" Foreground="#FF6E2F" FontSize="11"
+                            Visibility="{Binding PasswordError, Converter={StaticResource StringToVisibilityConverter}}"/>
+
+                <Button Style="{StaticResource AdminButtons}" Width="auto" Height="50" Margin="0 20 0 0" 
+                      Content="Войти" FontSize="12" Command="{Binding LoginCommand}"/>
+
+                <TextBlock Text="Регистрация" Style="{StaticResource StandardTextBlock}" FontSize="12" 
+                           Foreground="#83AFFF" HorizontalAlignment="Right" Cursor="Hand">
+                  <TextBlock.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" 
+                      Command="{Binding OpenRegistrationCommand}"/>
+                  </TextBlock.InputBindings>
+                </TextBlock>
+
+              </StackPanel>
+          </Border>
+        </local:InnerShadowBorder.InnerContent>
+      </local:InnerShadowBorder>
+    </StackPanel>
+
+    
+  </Grid>
+  </Border>
+
+</Window>

@@ -1,0 +1,78 @@
+﻿<Page x:Class="FashionHub.Views.OrderDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:components="clr-namespace:FashionHub.Components"
+      Title="Order Details"
+      Background="White">
+
+  <Page.Resources>
+    <ResourceDictionary Source="../Resources/Styles.xaml"/>
+  </Page.Resources>
+
+  <Grid Background="#252424">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="100"/>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <TextBlock Text="Информация о заказе" Style="{StaticResource Title}" Grid.Row="1" Margin="30 50 0 0"/>
+
+    <components:NavigationBar Grid.Row="0"/>
+
+    <Grid Grid.Row="2" Margin="30">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="2*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0">
+        <ItemsControl ItemsSource="{Binding OrderItems}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel Orientation="Vertical"/>
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <components:ProductCardHorizontal Margin="0 10"/>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+
+      <components:InnerShadowBorder Grid.Column="1"
+                                    Width="Auto"
+                                    Height="Auto"
+                                    ShadowFill="#502971"
+                                    ContentBackground="#633788"
+                                    ContentBorderBrush="#A76AD9"
+                                    VerticalAlignment="Top"
+                                    Margin="30 0 0 0">
+        <components:InnerShadowBorder.InnerContent>
+          <Border Padding="30">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+
+              <TextBlock Text="Информация о заказе" Style="{StaticResource Title}" Margin="0 0 0 20"/>
+
+              <TextBlock Text="{Binding OrderDate, StringFormat='Дата заказа: {0:dd.MM.yyyy}'}" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+              <TextBlock Text="{Binding DeliveryMethod, StringFormat='Способ доставки: {0}'}" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+              <TextBlock Text="{Binding Status, StringFormat='Статус: {0}'}" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+              <TextBlock Text="{Binding Address, StringFormat='Адрес: {0}'}" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+              <TextBlock Text="{Binding NearestDeliveryDate, StringFormat='Дата доставки: {0}'}" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 30"/>
+
+              <Separator Margin="0 10"/>
+
+              <TextBlock Text="{Binding TotalCount, StringFormat='Всего товаров: {0}'}" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+              <TextBlock Text="{Binding TotalPrice, StringFormat='Итого: {0:C}'}" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 30"/>
+
+              <Button Content="Вернуться Назад" Command="{Binding GoBackCommand}" Style="{StaticResource CustomButton}" Height="60" Cursor="Hand"/>
+              <Button Content="Отменить заказ" Command="{Binding CancelOrderCommand}" Style="{StaticResource SecondaryCustomButton}" Height="60" Cursor="Hand" Margin="0 20 0 0"/>
+
+            </StackPanel>
+          </Border>
+        </components:InnerShadowBorder.InnerContent>
+      </components:InnerShadowBorder>
+    </Grid>
+  </Grid>
+</Page>

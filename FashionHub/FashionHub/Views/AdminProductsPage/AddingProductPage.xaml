@@ -1,0 +1,304 @@
+﻿<Page x:Class="FashionHub.Views.AddingProductPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:components="clr-namespace:FashionHub.Components"
+      xmlns:vm="clr-namespace:FashionHub.ViewModels"
+      xmlns:models="clr-namespace:FashionHub"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      x:Name="ThisPage"
+      Title="ItemDetailsPage">
+
+  <Page.Resources>
+    <ResourceDictionary Source="../../Resources/Styles.xaml"/>
+  </Page.Resources>
+
+  <Grid Background="#252424">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <components:NavigationBar VerticalAlignment="Top" Grid.Row="0"/>
+
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" >
+      <Border   AllowDrop="True"
+                Background="Transparent"
+                DragOver="ImageBorder_DragOver"
+                Drop="ImageBorder_Drop">
+      <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="auto"/>
+          <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+          <TextBlock Text="{Binding TitleText}" HorizontalAlignment="Center" Style="{StaticResource Title}" Grid.Row="0" Grid.ColumnSpan="2"  Margin="0 20 0 0"/>
+
+          <Border Padding="25" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch"  MaxWidth="500"> 
+          <WrapPanel Orientation="Horizontal">
+            <ItemsControl ItemsSource="{Binding ClothingItem.ImagePaths}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <WrapPanel/>
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Grid Margin="10">
+                    <Image Source="{Binding}" Width="400" Height="400"/>
+                    <Button Content="✕"
+                Width="30"
+                Height="30"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Background="Red"
+                Foreground="White"
+                Command="{Binding DataContext.RemoveImageCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                CommandParameter="{Binding}"/>
+                  </Grid>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+          </WrapPanel>
+
+        </Border>
+
+          <Border Padding="50"  Grid.Row="1" Grid.Column="1">
+            <StackPanel Width="auto" Orientation="Vertical" HorizontalAlignment="Stretch" MaxWidth="500">
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32" HorizontalAlignment="Stretch">
+                <TextBlock Text="Короткое имя:" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                      ShadowFill="Gray"
+                      ContentBackground="#252424"
+                      ContentBorderBrush="Black"
+                      Height="auto"
+                      MinHeight="30"
+                      HorizontalAlignment="Stretch">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding ClothingItem.ShortName}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding ClothingItemErrors[ShortName]}" 
+             TextWrapping="Wrap"
+             Foreground="#FF6E2F" 
+             FontSize="12" 
+             Margin="5 2 0 0"/>
+              </StackPanel>
+
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32" HorizontalAlignment="Stretch">
+                <TextBlock Text="Полное имя:" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                      ShadowFill="Gray"
+                      ContentBackground="#252424"
+                      ContentBorderBrush="Black"
+                      Height="auto"
+                      MinHeight="30"
+                      HorizontalAlignment="Stretch">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding ClothingItem.FullName}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding ClothingItemErrors[FullName]}" 
+                         TextWrapping="Wrap"
+             Foreground="#FF6E2F" 
+             FontSize="12" 
+             Margin="5 2 0 0"/>
+              </StackPanel>
+
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32" HorizontalAlignment="Stretch">
+                <TextBlock Text="Цена (в долларах):" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                      ShadowFill="Gray"
+                      ContentBackground="#252424"
+                      ContentBorderBrush="Black"
+                      Height="auto"
+                      MinHeight="30"
+                      HorizontalAlignment="Stretch">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding ClothingItem.Price}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding ClothingItemErrors[Price]}" 
+                         TextWrapping="Wrap"
+             Foreground="#FF6E2F" 
+             FontSize="12" 
+             Margin="5 2 0 0"/>
+              </StackPanel>
+
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32" HorizontalAlignment="Stretch">
+                <TextBlock Text="Описание" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                      ShadowFill="Gray"
+                      ContentBackground="#252424"
+                      ContentBorderBrush="Black"
+                      Height="auto"
+                      MinHeight="30"
+                      HorizontalAlignment="Stretch">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding ClothingItem.Description}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding ClothingItemErrors[Description]}" 
+                         TextWrapping="Wrap"
+             Foreground="#FF6E2F" 
+             FontSize="12" 
+             Margin="5 2 0 0"/>
+              </StackPanel>
+
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32" HorizontalAlignment="Stretch">
+                <TextBlock Text="Страна доставки" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                      ShadowFill="Gray"
+                      ContentBackground="#252424"
+                      ContentBorderBrush="Black"
+                      Height="auto"
+                      MinHeight="30"
+                      HorizontalAlignment="Stretch">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding ClothingItem.DeliveryCountry}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding ClothingItemErrors[DeliveryCountry]}" 
+                         TextWrapping="Wrap"
+             Foreground="#FF6E2F" 
+             FontSize="12" 
+             Margin="5 2 0 0"/>
+              </StackPanel>
+
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32" HorizontalAlignment="Stretch">
+                <TextBlock Text="Состав" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                      ShadowFill="Gray"
+                      ContentBackground="#252424"
+                      ContentBorderBrush="Black"
+                      Height="auto"
+                      MinHeight="30"
+                      HorizontalAlignment="Stretch">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding ClothingItem.Compound}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding ClothingItemErrors[Compound]}" 
+                         TextWrapping="Wrap"
+             Foreground="#FF6E2F" 
+             FontSize="12" 
+             Margin="5 2 0 0"/>
+              </StackPanel>
+
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32" HorizontalAlignment="Stretch">
+                <TextBlock Text="Цвет" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                      ShadowFill="Gray"
+                      ContentBackground="#252424"
+                      ContentBorderBrush="Black"
+                      Height="auto"
+                      MinHeight="30"
+                      HorizontalAlignment="Stretch">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding ClothingItem.Color}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding ClothingItemErrors[Color]}" 
+                         TextWrapping="Wrap"
+             Foreground="#FF6E2F" 
+             FontSize="12" 
+             Margin="5 2 0 0"/>
+              </StackPanel>
+
+
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32" HorizontalAlignment="Stretch">
+                <TextBlock Text="Размер" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                      ShadowFill="Gray"
+                      ContentBackground="#252424"
+                      ContentBorderBrush="Black"
+                      Height="auto"
+                      MinHeight="30"
+                      HorizontalAlignment="Stretch">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding ClothingItem.Size}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding ClothingItemErrors[Size]}" 
+                         TextWrapping="Wrap"
+             Foreground="#FF6E2F" 
+             FontSize="12" 
+             Margin="5 2 0 0"/>
+              </StackPanel>
+
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32" HorizontalAlignment="Stretch">
+                <TextBlock Text="Количество проданных вещей" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                      ShadowFill="Gray"
+                      ContentBackground="#252424"
+                      ContentBorderBrush="Black"
+                      HorizontalAlignment="Stretch"
+                      Height="auto"
+                      MinHeight="30">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding ClothingItem.SalesCount}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding ClothingItemErrors[SalesCount]}" 
+                         TextWrapping="Wrap"
+             Foreground="#FF6E2F" 
+             FontSize="12" 
+             Margin="5 2 0 0"/>
+              </StackPanel>
+
+              <StackPanel Orientation="Vertical" Margin="0 0 0 32" HorizontalAlignment="Stretch">
+                <TextBlock Text="Количество вещей на складе" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:InnerShadowBorder
+                      ShadowFill="Gray"
+                      ContentBackground="#252424"
+                      ContentBorderBrush="Black"
+                      HorizontalAlignment="Stretch"
+                      Height="auto"
+                      MinHeight="30">
+                  <components:InnerShadowBorder.InnerContent>
+                    <TextBox Text="{Binding ClothingItem.Quantity}" Style="{StaticResource StandardTextBox}"  Background="Transparent" BorderThickness="0"/>
+                  </components:InnerShadowBorder.InnerContent>
+                </components:InnerShadowBorder>
+                <TextBlock Text="{Binding ClothingItemErrors[Quantity]}" 
+                         TextWrapping="Wrap"
+             Foreground="#FF6E2F" 
+             FontSize="12" 
+             Margin="5 2 0 0"/>
+              </StackPanel>
+
+              <StackPanel Orientation="Vertical"  Margin="0 0 0 32" >
+                <TextBlock Text="Категория" Style="{StaticResource StandardTextBlock}" Margin="0 0 0 10"/>
+                <components:CustomComboBox
+                 ItemsSource="{Binding Categories}"
+                SelectedItem="{Binding SelectedCategory}">
+                </components:CustomComboBox>
+                
+                  <TextBlock Text="{Binding ClothingItemErrors[Category]}" 
+                TextWrapping="Wrap"
+                Foreground="#FF6E2F" 
+                FontSize="12" 
+                Margin="5 2 0 0"/>
+              </StackPanel>
+
+
+              <Button Content="Добавить картинку" Style="{StaticResource CustomButton}" Height="50" Width="auto"
+                    Command="{Binding AddImageCommand}" Cursor="Hand"/>
+
+              <Button Content="{Binding ButtonText}" Style="{StaticResource CustomButton}" Height="85" Width="auto" Margin="0 40 0 0" Cursor="Hand"
+                    Command="{Binding FinishCommand}"/>
+
+            </StackPanel>
+          </Border>
+        </Grid>
+      </Border>
+    </ScrollViewer>
+
+  </Grid>
+</Page>

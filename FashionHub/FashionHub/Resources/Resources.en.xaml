@@ -1,0 +1,75 @@
+﻿<!--<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  --><!-- Главное окно --><!--
+  <sys:String x:Key="Login">Login to your account</sys:String>
+  <sys:String x:Key="AdminPanel">Admin Panel</sys:String>
+  <sys:String x:Key="AddItem">Add Item</sys:String>
+  <sys:String x:Key="ChangeLanguage">Change Language</sys:String>
+  <sys:String x:Key="Filters">Filters</sys:String>
+  <sys:String x:Key="Categories">Categories</sys:String>
+  <sys:String x:Key="AllClothing">All Clothing</sys:String>
+  <sys:String x:Key="MenClothing">Men's Clothing</sys:String>
+  <sys:String x:Key="WomenClothing">Women's Clothing</sys:String>
+  <sys:String x:Key="KidsClothing">Kids' Clothing</sys:String>
+  <sys:String x:Key="PriceRange">Price (BYN)</sys:String>
+  <sys:String x:Key="PriceFrom">From:</sys:String>
+  <sys:String x:Key="PriceTo">To:</sys:String>
+  <sys:String x:Key="ApplyFilters">Apply Filters</sys:String>
+  <sys:String x:Key="Sizes">Sizes</sys:String>
+  <sys:String x:Key="Price">Price</sys:String>
+  <sys:String x:Key="Rating">Rating</sys:String>
+  <sys:String x:Key="EditItem">Edit Item</sys:String>
+  <sys:String x:Key="DeleteItem">Delete Item</sys:String>
+
+  --><!-- Окно логина --><!--
+  <sys:String x:Key="LoginWindowTitle">Login and Registraion</sys:String>
+  <sys:String x:Key="LoginTitle">Login</sys:String>
+  <sys:String x:Key="LoginLabel">Username:</sys:String>
+  <sys:String x:Key="PasswordLabel">Password:</sys:String>
+  <sys:String x:Key="LoginButton">Sign In</sys:String>
+  <sys:String x:Key="RegisterTitle">Registration</sys:String>
+  <sys:String x:Key="EmailLabel">Email:</sys:String>
+  <sys:String x:Key="RepeatPasswordLabel">Repeat password:</sys:String>
+  <sys:String x:Key="RegisterButton">Register</sys:String>
+  <sys:String x:Key="SwitchToRegister">Registration</sys:String>
+  <sys:String x:Key="SwitchToLogin">Login</sys:String>
+
+  --><!-- Окно Товара --><!--
+  <sys:String x:Key="ItemDetailsTitle">Product Details</sys:String>
+  <sys:String x:Key="DescriptionLabel">Description:</sys:String>
+  <sys:String x:Key="CategoryLabel">Category:</sys:String>
+  <sys:String x:Key="ColorLabel">Color:</sys:String>
+  <sys:String x:Key="SizeLabel">Size:</sys:String>
+  <sys:String x:Key="PriceLabel">Price:</sys:String>
+  <sys:String x:Key="DiscountLabel">Discount:</sys:String>
+  <sys:String x:Key="DeliveryLabel">Delivery country:</sys:String>
+  <sys:String x:Key="RatingLabel">Rating:</sys:String>
+  <sys:String x:Key="StockLabel">Quantity in stock:</sys:String>
+  <sys:String x:Key="PurchasedLabel">Quantity purchased:</sys:String>
+  <sys:String x:Key="AvailabilityLabel">Availability:</sys:String>
+  <sys:String x:Key="CommentsLabel">Comments:</sys:String>
+  <sys:String x:Key="AddCommentLabel">You can add your comment</sys:String>
+  <sys:String x:Key="SubmitCommentButton">Submit</sys:String>
+  <sys:String x:Key="RatingFormat">Rating: {0:N1}</sys:String>
+
+  --><!--Окно редактирования товара--><!--
+  <sys:String x:Key="EditItemTitle">Edit Product</sys:String>
+  <sys:String x:Key="ShortNameLabel">Short name:</sys:String>
+  <sys:String x:Key="FullNameLabel">Full name:</sys:String>
+  <sys:String x:Key="ImagesLabel">Images:</sys:String>
+  <sys:String x:Key="DeliveryCountryLabel">Delivery country:</sys:String>
+  <sys:String x:Key="QuantityInStockLabel">Quantity in stock:</sys:String>
+  <sys:String x:Key="QuantityPurchasedLabel">Items sold:</sys:String>
+  <sys:String x:Key="SaveButton">Save</sys:String>
+
+</ResourceDictionary>-->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <sys:String x:Key="Popular">Popular</sys:String>
+  <sys:String x:Key="Recommendations">Recommendations</sys:String>
+  <sys:String x:Key="Login">Login</sys:String>
+</ResourceDictionary>
+

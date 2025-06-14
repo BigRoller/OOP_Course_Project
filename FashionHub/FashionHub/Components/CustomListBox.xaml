@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="FashionHub.Components.CustomListBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FashionHub.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+  <UserControl.Resources>
+    <ResourceDictionary Source="../Resources/Styles.xaml"/>
+  </UserControl.Resources>
+
+  <Grid>
+    <TextBlock>
+<TextBlock>
+        <TextBlock.Style>
+          <Style TargetType="TextBlock">
+            <Setter Property="Text" Value="{Binding SelectedSummary, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            <Style.Triggers>
+              <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                  <Condition Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0"/>
+                  <Condition Binding="{Binding ItemsSource.Count, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Text" Value="Нет доступных элементов"/>
+                <Setter Property="Foreground" Value="Red"/>
+              </MultiDataTrigger>
+            </Style.Triggers>
+          </Style>
+        </TextBlock.Style>
+</TextBlock>
+
+    </TextBlock>
+    
+    <Border Background="#83AFFF" CornerRadius="20" Padding="10" MouseDown="TogglePopup">
+      <TextBlock Text="{Binding SelectedSummary, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                 FontFamily="Inter" FontSize="16" VerticalAlignment="Center"/>
+    </Border>
+
+    <Popup x:Name="ListPopup" Placement="Bottom" StaysOpen="False"
+           AllowsTransparency="True" PopupAnimation="Slide">
+      <Border Background="White" CornerRadius="0,0,10,10" BorderThickness="1" BorderBrush="#83AFFF">
+        <ScrollViewer MaxHeight="200">
+          <ListBox ItemsSource="{Binding ItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}"
+         SelectionMode="Multiple"
+         Background="White"
+         BorderThickness="0"
+         Margin="0">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <CheckBox Content="{Binding}"
+                IsChecked="{Binding DataContext.SelectedItems, 
+                                    RelativeSource={RelativeSource AncestorType=UserControl}, 
+                                    Mode=TwoWay,
+                                    Converter={StaticResource ListContainsConverter},
+                                    ConverterParameter={Binding}}" />
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+
+        </ScrollViewer>
+      </Border>
+    </Popup>
+  </Grid>
+</UserControl>

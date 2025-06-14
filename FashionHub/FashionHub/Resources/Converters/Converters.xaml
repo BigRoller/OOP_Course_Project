@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:FashionHub.Resources.Converters">
+  <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+  <local:EmptyTextToVisibilityConverter x:Key="EmptyTextToVisibilityConverter"/>
+  <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+  <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+  <local:FavoriteIconConverter x:Key="FavoriteIconConverter"/>
+  <local:FavoriteIconConverter x:Key="ListContainsConverter"/>
+  <local:EmptyCartVisibilityConverter x:Key="EmptyCartVisibilityConverter"/>
+  <local:CartVisibilityMultiConverter x:Key="CartVisibilityMultiConverter"/>
+  <local:BoolToFittingRoomTextConverter x:Key="BoolToFittingRoomTextConverter"/>
+  <local:BoolToMaleConverter x:Key="BoolToMaleConverter"/>
+  <local:BoolToFemaleConverter x:Key="BoolToFemaleConverter"/>
+  <local:NullOrEmptyToVisibilityConverter x:Key="NullOrEmptyToVisibilityConverter"/>
+  <local:EditingStateToVisibilityConverter x:Key="EditingStateToVisibilityConverter"/>
+  <local:GenderToMaleCheckedConverter x:Key="GenderToMaleConverter" />
+  <local:GenderToFemaleCheckedConverter x:Key="GenderToFemaleConverter" />
+  <local:GenderToNullCheckedConverter x:Key="GenderToNullCheckedConverter" />
+  <local:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+  
+
+</ResourceDictionary>

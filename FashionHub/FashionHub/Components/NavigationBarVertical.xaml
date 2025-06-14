@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="FashionHub.Components.NavigationBarVertical"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:FashionHub.ViewModels"
+             xmlns:views="clr-namespace:FashionHub.Views"
+             xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:local="clr-namespace:FashionHub.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+  <UserControl.Resources>
+    <ResourceDictionary Source="../Resources/Styles.xaml"/>
+  </UserControl.Resources>
+
+  <Grid>
+    <Border Padding="50" Background="#633788" Margin=" 0 2 0 0 ">
+      <StackPanel Width="210" Orientation="Vertical">
+        <TextBlock Text="Мои заказы" Style="{StaticResource StandardTextBlock}" Margin="0 40 0 0" Cursor="Hand">
+             <interactivity:Interaction.Triggers>
+              <interactivity:EventTrigger EventName="MouseLeftButtonUp">
+                <interactivity:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{x:Type views:ProfileOrdersPage}" />
+              </interactivity:EventTrigger>
+            </interactivity:Interaction.Triggers>
+        </TextBlock>
+        <TextBlock Text="Отзывы" Style="{StaticResource StandardTextBlock}" Margin="0 40 0 0" Cursor="Hand">
+             <interactivity:Interaction.Triggers>
+              <interactivity:EventTrigger EventName="MouseLeftButtonUp">
+                <interactivity:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{x:Type views:ProfileCommentsPage}" />
+              </interactivity:EventTrigger>
+            </interactivity:Interaction.Triggers>
+        </TextBlock>
+        <TextBlock Text="Мои данные" Style="{StaticResource StandardTextBlock}" Margin="0 40 0 0" Cursor="Hand">
+             <interactivity:Interaction.Triggers>
+              <interactivity:EventTrigger EventName="MouseLeftButtonUp">
+                <interactivity:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{x:Type views:ProfileInformationPage}" />
+              </interactivity:EventTrigger>
+            </interactivity:Interaction.Triggers>
+        </TextBlock>
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>
